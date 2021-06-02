@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This network was created in GeNIe Academic, which can be used for academic teaching and research purposes only -->
+<smile version="1.0" id="Network1" numsamples="10000" discsamples="10000">
+	<nodes>
+		<deterministic id="Negative_degrees">
+			<state id="State0" />
+			<state id="State1" />
+			<resultingstates>State0</resultingstates>
+		</deterministic>
+		<deterministic id="Rainfall">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Negative_degrees</parents>
+			<resultingstates>State1 State0</resultingstates>
+		</deterministic>
+		<deterministic id="Have_bread">
+			<state id="State0" />
+			<state id="State1" />
+			<resultingstates>State0</resultingstates>
+		</deterministic>
+		<deterministic id="Have_time">
+			<state id="State0" />
+			<state id="State1" />
+			<resultingstates>State0</resultingstates>
+		</deterministic>
+		<deterministic id="Corona">
+			<state id="State0" />
+			<state id="State1" />
+			<resultingstates>State0</resultingstates>
+		</deterministic>
+		<decision id="Make_lunch">
+			<state id="Choice0" />
+			<state id="Choice1" />
+			<parents>Have_bread Rainfall Have_time Corona</parents>
+		</decision>
+		<deterministic id="Nice_skiing_conditions">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Rainfall</parents>
+			<resultingstates>State0 State0</resultingstates>
+		</deterministic>
+		<decision id="Activity">
+			<state id="Skiing" />
+			<state id="City_walk" />
+			<parents>Rainfall Make_lunch Nice_skiing_conditions Negative_degrees Corona</parents>
+		</decision>
+		<cpt id="Workout">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Activity</parents>
+			<probabilities>0.8 0.2 0.05 0.95</probabilities>
+		</cpt>
+		<cpt id="Sore_muscles">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Workout</parents>
+			<probabilities>0.95 0.05 0.2 0.8</probabilities>
+		</cpt>
+		<cpt id="Accident">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Activity Workout</parents>
+			<probabilities>0.4 0.6 0.2 0.8 0.05 0.95 0.01 0.99</probabilities>
+		</cpt>
+		<cpt id="Injury">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Accident</parents>
+			<probabilities>0.3 0.7 0 1</probabilities>
+		</cpt>
+		<utility id="Utility_health">
+			<parents>Workout Injury</parents>
+			<utilities>100 1000 0 500</utilities>
+		</utility>
+		<cpt id="Bring_lunch">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Make_lunch</parents>
+			<probabilities>0.9 0.1 0 1</probabilities>
+		</cpt>
+		<cpt id="Buy_food">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Make_lunch Bring_lunch</parents>
+			<probabilities>0.1 0.9 0.4 0.6 0.5 0.5 0.9 0.1</probabilities>
+		</cpt>
+		<utility id="Utility_taste">
+			<parents>Buy_food Bring_lunch</parents>
+			<utilities>250 200 100 0</utilities>
+		</utility>
+		<cpt id="Tired">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Workout</parents>
+			<probabilities>0.8 0.2 0.4 0.6</probabilities>
+		</cpt>
+		<cpt id="Minor_injury">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Accident</parents>
+			<probabilities>0.5 0.5 0 1</probabilities>
+		</cpt>
+		<utility id="Utility_condition">
+			<parents>Sore_muscles Tired Minor_injury</parents>
+			<utilities>0 20 50 70 50 70 100 120</utilities>
+		</utility>
+		<decision id="Bring_water">
+			<state id="Choice0" />
+			<state id="Choice1" />
+			<parents>Activity Corona Make_lunch</parents>
+		</decision>
+		<cpt id="Buy_water">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Bring_water Activity</parents>
+			<probabilities>0.05 0.95 0.01 0.99 0.9 0.1 0.5 0.5</probabilities>
+		</cpt>
+		<utility id="Utility_cost">
+			<parents>Buy_water Buy_food</parents>
+			<utilities>0 250 50 300</utilities>
+		</utility>
+		<mau id="Total_utility">
+			<parents>Utility_health Utility_taste Utility_condition Utility_cost</parents>
+			<weights>1 1 1 1</weights>
+		</mau>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 3.0.6128.0 ACADEMIC" name="Network1">
+			<node id="Activity">
+				<name>Activity</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>298 285 405 351</position>
+				<barchart active="true" width="150" height="66" />
+			</node>
+			<node id="Make_lunch">
+				<name>Make lunch</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>246 527 350 595</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Have_bread">
+				<name>Have bread</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>83 531 192 601</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Rainfall">
+				<name>Rainfall</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>96 295 207 365</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Sore_muscles">
+				<name>Sore muscles</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>611 268 713 334</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Total_utility">
+				<name>Total utility</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>786 547 890 616</position>
+				<barchart active="true" width="160" height="64" />
+			</node>
+			<node id="Buy_food">
+				<name>Buy food</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>423 510 528 583</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Bring_lunch">
+				<name>Bring lunch</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>426 619 535 688</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Tired">
+				<name>Tired</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>467 284 571 349</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Injury">
+				<name>Injury</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>746 61 853 132</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Accident">
+				<name>Accident</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>492 55 599 125</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Bring_water">
+				<name>Bring water</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>360 402 466 470</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Buy_water">
+				<name>Buy water</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>525 387 629 456</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Workout">
+				<name>Workout</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>496 188 594 255</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Have_time">
+				<name>Have time</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>246 628 352 696</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Nice_skiing_conditions">
+				<name>Nice skiing conditions</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>295 160 407 234</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Negative_degrees">
+				<name>Negative degrees</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>93 171 204 248</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Utility_health">
+				<name>Utility health</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>755 217 859 274</position>
+				<barchart active="true" width="146" height="64" />
+			</node>
+			<node id="Utility_taste">
+				<name>Utility taste</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>594 566 699 633</position>
+				<barchart active="true" width="140" height="64" />
+			</node>
+			<node id="Corona">
+				<name>Corona</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>208 379 317 454</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+			<node id="Utility_condition">
+				<name>Utility condition</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>675 358 780 434</position>
+				<barchart active="true" width="153" height="64" />
+			</node>
+			<node id="Utility_cost">
+				<name>Utility cost</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>578 484 672 539</position>
+				<barchart active="true" />
+			</node>
+			<node id="Minor_injury">
+				<name>Minor injury</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="12" />
+				<position>633 141 737 204</position>
+				<barchart active="true" width="128" height="66" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
